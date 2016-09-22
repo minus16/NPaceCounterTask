@@ -6,7 +6,7 @@ package com.naver.task.npacecountertask.environment;
 
 public class Preferences {
 
-    //Log
+    //Log flags
     final public static boolean bActivityLOG = true;
 
 }

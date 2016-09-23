@@ -4,4 +4,8 @@
     <string name="tab2">Pace Log</string>
     <string name="pace_count">Pace Count</string>
     <string name="cut_loc">Current Location</string>
+    <string name="calc">Calculating..</string>
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
+
 </resources>

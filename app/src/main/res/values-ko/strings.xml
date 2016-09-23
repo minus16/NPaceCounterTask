@@ -5,4 +5,7 @@
     <string name="tab2">만보기 기록</string>
     <string name="pace_count">걸음 수</string>
     <string name="cut_loc">현재 위치</string>
+    <string name="calc">계산 중..</string>
+    <string name="start">시작</string>
+    <string name="stop">중지</string>
 </resources>

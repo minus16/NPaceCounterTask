@@ -1,9 +1,10 @@
-package com.naver.task.npacecountertask;
+package com.naver.task.npacecountertask.activity;
 
 import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.naver.task.npacecountertask.R;
 import com.naver.task.npacecountertask.activity.CommonActivity;
 
 public class MainActivity extends CommonActivity {

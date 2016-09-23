@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">NPaceCounterTask</string>
+    <string name="tab1">Pace Counter</string>
+    <string name="tab2">Pace Log</string>
+    <string name="pace_count">Pace Count</string>
+    <string name="cut_loc">Current Location</string>
 </resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">만보기</string>
+    <string name="tab1">만보기 화면</string>
+    <string name="tab2">만보기 기록</string>
+    <string name="pace_count">걸음 수</string>
+    <string name="cut_loc">현재 위치</string>
+</resources>

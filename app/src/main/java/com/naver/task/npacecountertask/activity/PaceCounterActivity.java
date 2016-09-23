@@ -2,6 +2,7 @@ package com.naver.task.npacecountertask.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.naver.task.npacecountertask.GeocodingUtil.GeocodingManager;
 import com.naver.task.npacecountertask.R;
 import com.naver.task.npacecountertask.environment.Preferences;
 import com.naver.task.npacecountertask.services.PaceCounterService;
@@ -31,6 +33,10 @@ public class PaceCounterActivity extends CommonActivity{
 
         mContext = this;
         setContentView(R.layout.pace_counter);
+
+        //AsyncTask
+        new GeoASyncTask().execute();
+
 
         resultReceiver = new MResultReceiver(null);
 
@@ -141,6 +147,28 @@ public class PaceCounterActivity extends CommonActivity{
                 int cnt = (int)resultData.getFloat("step");
                 setPaceCount(cnt);
             }
+        }
+    }
+
+    public class GeoASyncTask extends AsyncTask<Void, Void, String>
+    {
+        @Override
+        protected String doInBackground(Void... params) {
+            GeocodingManager gm = new GeocodingManager();
+            String result ="";
+            try {
+                result = gm.getAddress();
+            }
+            catch (Exception e)
+            {
+                int a = 10;
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
         }
     }
 }

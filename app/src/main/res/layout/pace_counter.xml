@@ -6,7 +6,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="200dp"
         android:orientation="horizontal"
         android:gravity="center">
 
@@ -19,12 +19,29 @@
             android:text="@string/pace_count"/>
 
         <TextView
-            android:id="@+id/pacecount"
+            android:id="@+id/pace_count_info"
             android:layout_height="50dp"
             android:layout_width="wrap_content"
             android:layout_gravity="center"
             android:textSize="32dp"
             android:text="0"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+
+        <TextView
+            android:id="@+id/pace_move_distance"
+            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="32dp"
+            android:text="0 km"/>
 
     </LinearLayout>
 

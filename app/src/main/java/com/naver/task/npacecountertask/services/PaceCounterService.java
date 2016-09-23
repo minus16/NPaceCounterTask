@@ -7,10 +7,13 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Bundle;
 import android.os.IBinder;
-import android.os.RemoteCallbackList;
-import android.support.annotation.Nullable;
+import android.os.ResultReceiver;
 import android.util.Log;
+
+import com.naver.task.npacecountertask.environment.Preferences;
+
 
 /**
  * Created by minus on 2016-09-23.
@@ -20,7 +23,7 @@ public class PaceCounterService extends Service implements SensorEventListener{
 
     private SensorManager sensorManager = null;
     private Sensor countSensor = null;
-
+    private ResultReceiver resultReceiver;
 
     @Override
     public void onCreate() {
@@ -37,9 +40,10 @@ public class PaceCounterService extends Service implements SensorEventListener{
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        return super.onStartCommand(intent, flags, startId);
+        //return super.onStartCommand(intent, flags, startId);
+        resultReceiver = intent.getParcelableExtra("receiver");
+        return START_STICKY;
     }
-
 
     @Override
     public void onDestroy() {
@@ -48,7 +52,6 @@ public class PaceCounterService extends Service implements SensorEventListener{
         Log.d("minus", "stop service");
     }
 
-    @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return null;
@@ -57,6 +60,9 @@ public class PaceCounterService extends Service implements SensorEventListener{
     @Override
     public void onSensorChanged(SensorEvent event) {
         Log.d("minus", String.valueOf(event.values[0]));
+        Bundle b = new Bundle();
+        b.putFloat("step", event.values[0]);
+        resultReceiver.send(Preferences.PACE_COUNT_MSG,b);
     }
 
     @Override

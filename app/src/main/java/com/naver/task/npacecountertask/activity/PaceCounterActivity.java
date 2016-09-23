@@ -3,11 +3,15 @@ package com.naver.task.npacecountertask.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.ResultReceiver;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.naver.task.npacecountertask.R;
+import com.naver.task.npacecountertask.environment.Preferences;
 import com.naver.task.npacecountertask.services.PaceCounterService;
 
 /**
@@ -16,17 +20,19 @@ import com.naver.task.npacecountertask.services.PaceCounterService;
 
 public class PaceCounterActivity extends CommonActivity{
 
-    Button mStartBtn = null;
-    Context mContext = null;
+    private Button mStartBtn = null;
+    private Context mContext = null;
     private boolean bStart = false;
+    public MResultReceiver resultReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         mContext = this;
-
         setContentView(R.layout.pace_counter);
+
+        resultReceiver = new MResultReceiver(null);
 
         //set Button
         mStartBtn = (Button) findViewById(R.id.start_btn);
@@ -40,12 +46,14 @@ public class PaceCounterActivity extends CommonActivity{
                 if(bStart == false)//do start
                 {
                     Intent intent = new Intent(getApplicationContext(), PaceCounterService.class);
+                    intent.putExtra("receiver", resultReceiver);
                     startService(intent);
                     bStart = true;
                 }
                 else//do stop
                 {
                     Intent intent = new Intent(getApplicationContext(), PaceCounterService.class);
+                    intent.putExtra("receiver", resultReceiver);
                     stopService(intent);
                     bStart = false;
                 }
@@ -56,14 +64,17 @@ public class PaceCounterActivity extends CommonActivity{
 
     public void setPaceCount(int cnt)
     {
-        TextView tv = (TextView) findViewById(R.id.pacecount);
-        tv.setText(cnt);
+        TextView tv = (TextView) findViewById(R.id.pace_count_info);
+        Log.d("minus", "final result : " + cnt);
+        if(tv!=null)
+            tv.setText(String.valueOf(cnt));
     }
 
     public void showPopupWindow()
     {
-        startActivity(new Intent(this, MiniWindow.class));
+        //startActivity(new Intent(this, MiniWindow.class));
     }
+
     private void changeBtnTxt(boolean b)
     {
         if(b == false)
@@ -105,10 +116,31 @@ public class PaceCounterActivity extends CommonActivity{
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        Intent intent = new Intent(getApplicationContext(), PaceCounterService.class);
+        intent.putExtra("receiver", resultReceiver);
+        stopService(intent);
     }
 
     @Override
     public void finish() {
         super.finish();
+    }
+
+
+    class MResultReceiver extends ResultReceiver
+    {
+        public MResultReceiver(Handler handler) {
+            super(handler);
+        }
+
+        @Override
+        protected void onReceiveResult(int resultCode, Bundle resultData) {
+            if(resultCode==Preferences.PACE_COUNT_MSG)
+            {
+                int cnt = (int)resultData.getFloat("step");
+                setPaceCount(cnt);
+            }
+        }
     }
 }

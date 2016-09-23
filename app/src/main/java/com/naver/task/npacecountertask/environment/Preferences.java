@@ -9,4 +9,7 @@ public class Preferences {
     //Log flags
     final public static boolean bActivityLOG = true;
 
+    //services
+    final public static int PACE_COUNT_MSG = 100;
+
 }

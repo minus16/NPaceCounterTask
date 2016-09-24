@@ -1,11 +1,16 @@
 package com.naver.task.npacecountertask.activity;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.util.DebugUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +18,7 @@ import android.widget.TextView;
 
 import com.naver.task.npacecountertask.GeocodingUtil.GeocodingManager;
 import com.naver.task.npacecountertask.R;
+import com.naver.task.npacecountertask.environment.Debug;
 import com.naver.task.npacecountertask.environment.Preferences;
 import com.naver.task.npacecountertask.services.PaceCounterService;
 
@@ -73,6 +79,8 @@ public class PaceCounterActivity extends CommonActivity{
         TextView tv = (TextView) findViewById(R.id.pace_count_info);
         if(tv!=null)
             tv.setText(String.valueOf(cnt));
+
+        setDistanceTxt(cnt);
     }
 
     public void setLocationTxt(String txt)
@@ -81,6 +89,35 @@ public class PaceCounterActivity extends CommonActivity{
         if(tv!=null)
             tv.setText(String.valueOf(txt));
     }
+
+    public void setDistanceTxt(int cnt)
+    {
+        String distance = calculateDistance(cnt);
+        TextView tv = (TextView) findViewById(R.id.pace_move_distance);
+        if(tv!=null)
+            tv.setText(String.valueOf(distance));
+    }
+    public String calculateDistance(int cnt)
+    {
+        String result = "";
+        int av_step = 65;
+        int distance = (cnt*av_step)/100;
+        if(distance < 1000)
+        {
+            result = String.valueOf(distance) + " m";
+        }
+        else
+        {
+            String km = String.valueOf(distance / 1000);
+            String m = String.valueOf(distance % 1000);
+            m = m.substring(0,1);
+            m = "."+m+ " km";
+            result = km + m;
+        }
+        return result;
+    }
+
+
 
     public void showPopupWindow()
     {
@@ -169,7 +206,7 @@ public class PaceCounterActivity extends CommonActivity{
             }
             catch (Exception e)
             {
-                int a = 10;
+                Log.d("minus", "exception : " + e.getMessage());
             }
             return result;
         }

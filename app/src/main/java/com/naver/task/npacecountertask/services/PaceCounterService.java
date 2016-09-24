@@ -7,12 +7,18 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.ResultReceiver;
 import android.util.Log;
 
 import com.naver.task.npacecountertask.environment.Preferences;
+
+import java.io.FileDescriptor;
+import java.io.PrintWriter;
 
 
 /**
@@ -21,6 +27,7 @@ import com.naver.task.npacecountertask.environment.Preferences;
 
 public class PaceCounterService extends Service implements SensorEventListener{
 
+    //Geocoder
     private SensorManager sensorManager = null;
     private Sensor countSensor = null;
     private ResultReceiver resultReceiver;

@@ -71,9 +71,15 @@ public class PaceCounterActivity extends CommonActivity{
     public void setPaceCount(int cnt)
     {
         TextView tv = (TextView) findViewById(R.id.pace_count_info);
-        Log.d("minus", "final result : " + cnt);
         if(tv!=null)
             tv.setText(String.valueOf(cnt));
+    }
+
+    public void setLocationTxt(String txt)
+    {
+        TextView tv = (TextView) findViewById(R.id.cur_loc_txt);
+        if(tv!=null)
+            tv.setText(String.valueOf(txt));
     }
 
     public void showPopupWindow()
@@ -152,10 +158,12 @@ public class PaceCounterActivity extends CommonActivity{
 
     public class GeoASyncTask extends AsyncTask<Void, Void, String>
     {
+        public String result ="";
+        GeocodingManager gm = new GeocodingManager(mContext);
+
         @Override
         protected String doInBackground(Void... params) {
-            GeocodingManager gm = new GeocodingManager();
-            String result ="";
+
             try {
                 result = gm.getAddress();
             }
@@ -169,6 +177,8 @@ public class PaceCounterActivity extends CommonActivity{
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            setLocationTxt(result);
+            gm.stopUsingGPS();
         }
     }
 }

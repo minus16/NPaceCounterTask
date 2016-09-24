@@ -60,6 +60,7 @@
             android:text="@string/cut_loc"/>
 
         <TextView
+            android:id="@+id/cur_loc_txt"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_gravity="center"

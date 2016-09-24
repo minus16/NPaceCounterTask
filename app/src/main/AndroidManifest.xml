@@ -22,14 +22,14 @@
         <service android:name=".services.PaceCounterService">
         </service>
 
+        <provider android:name=".DataBaseManager.ContentProviderManager" android:authorities="com.naver.task.npacecountertask" android:exported ="true">
+        </provider>
 
     </application>
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
-
 
 
 </manifest>

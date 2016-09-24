@@ -16,8 +16,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.naver.task.npacecountertask.DataBaseManager.DBManager;
 import com.naver.task.npacecountertask.GeocodingUtil.GeocodingManager;
 import com.naver.task.npacecountertask.R;
+import com.naver.task.npacecountertask.Utils.PaceCounterUtil;
 import com.naver.task.npacecountertask.environment.Debug;
 import com.naver.task.npacecountertask.environment.Preferences;
 import com.naver.task.npacecountertask.services.PaceCounterService;
@@ -32,13 +34,21 @@ public class PaceCounterActivity extends CommonActivity{
     private Context mContext = null;
     private boolean bStart = false;
     public MResultReceiver resultReceiver;
+    private int mSTEP = 0;
+    private boolean isFirstStep = true;
+    private int mTodayStep = 0;
+
+    DBManager dm =null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         mContext = this;
+        dm = new DBManager(this);
         setContentView(R.layout.pace_counter);
+
+        getTodayFirstStep();
 
         //AsyncTask
         new GeoASyncTask().execute();
@@ -74,6 +84,12 @@ public class PaceCounterActivity extends CommonActivity{
         });
     }
 
+    public void getTodayFirstStep()
+    {
+        String date = PaceCounterUtil.getDate();
+        mTodayStep = dm.getDateStep(date);
+    }
+
     public void setPaceCount(int cnt)
     {
         TextView tv = (TextView) findViewById(R.id.pace_count_info);
@@ -92,36 +108,16 @@ public class PaceCounterActivity extends CommonActivity{
 
     public void setDistanceTxt(int cnt)
     {
-        String distance = calculateDistance(cnt);
+        String distance = PaceCounterUtil.calculateDistance(cnt);
         TextView tv = (TextView) findViewById(R.id.pace_move_distance);
         if(tv!=null)
             tv.setText(String.valueOf(distance));
     }
-    public String calculateDistance(int cnt)
-    {
-        String result = "";
-        int av_step = 65;
-        int distance = (cnt*av_step)/100;
-        if(distance < 1000)
-        {
-            result = String.valueOf(distance) + " m";
-        }
-        else
-        {
-            String km = String.valueOf(distance / 1000);
-            String m = String.valueOf(distance % 1000);
-            m = m.substring(0,1);
-            m = "."+m+ " km";
-            result = km + m;
-        }
-        return result;
-    }
-
 
 
     public void showPopupWindow()
     {
-        //startActivity(new Intent(this, MiniWindow.class));
+        startActivity(new Intent(this, MiniWindow.class));
     }
 
     private void changeBtnTxt(boolean b)
@@ -188,7 +184,15 @@ public class PaceCounterActivity extends CommonActivity{
             if(resultCode==Preferences.PACE_COUNT_MSG)
             {
                 int cnt = (int)resultData.getFloat("step");
-                setPaceCount(cnt);
+                mSTEP = cnt;
+                if(isFirstStep)
+                {
+                    String date = PaceCounterUtil.getDate();
+                    mTodayStep = dm.getDateStep(date);
+                }
+                mSTEP = mSTEP-mTodayStep;
+                int todat_cnt = cnt - mTodayStep;
+                setPaceCount(todat_cnt);
             }
         }
     }

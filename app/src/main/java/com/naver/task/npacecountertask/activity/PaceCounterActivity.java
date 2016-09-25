@@ -1,16 +1,11 @@
 package com.naver.task.npacecountertask.activity;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.util.DebugUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,7 +15,6 @@ import com.naver.task.npacecountertask.DataBaseManager.DBManager;
 import com.naver.task.npacecountertask.GeocodingUtil.GeocodingManager;
 import com.naver.task.npacecountertask.R;
 import com.naver.task.npacecountertask.Utils.PaceCounterUtil;
-import com.naver.task.npacecountertask.environment.Debug;
 import com.naver.task.npacecountertask.environment.Preferences;
 import com.naver.task.npacecountertask.services.PaceCounterService;
 

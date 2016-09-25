@@ -3,7 +3,6 @@ package com.naver.task.npacecountertask.activity;
 import android.app.ListActivity;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 
 import com.naver.task.npacecountertask.DataBaseManager.DBControl;

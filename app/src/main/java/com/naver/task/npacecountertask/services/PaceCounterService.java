@@ -3,26 +3,18 @@ package com.naver.task.npacecountertask.services;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.ResultReceiver;
 import android.util.Log;
 
-import com.naver.task.npacecountertask.DataBaseManager.DBControl;
 import com.naver.task.npacecountertask.DataBaseManager.DBManager;
 import com.naver.task.npacecountertask.Utils.PaceCounterUtil;
 import com.naver.task.npacecountertask.environment.Preferences;
-
-import java.io.FileDescriptor;
-import java.io.PrintWriter;
 
 
 /**

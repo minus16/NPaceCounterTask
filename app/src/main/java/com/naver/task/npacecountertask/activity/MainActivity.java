@@ -1,7 +1,6 @@
 package com.naver.task.npacecountertask.activity;
 
 import android.Manifest;
-import android.app.ActivityGroup;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
